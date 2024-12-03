@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 09:19:38 by fdehan            #+#    #+#             */
-/*   Updated: 2024/12/03 16:00:14 by fdehan           ###   ########.fr       */
+/*   Updated: 2024/12/03 18:26:54 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "fcntl.h"
 # include "libft/libft.h"
 # include "limits.h"
-# include "mlx.h"
+# include "mlx/mlx.h"
 # include <X11/keysym.h>
 # include <math.h>
 # include <stdio.h>

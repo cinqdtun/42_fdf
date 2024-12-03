@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 09:44:02 by fdehan            #+#    #+#             */
-/*   Updated: 2024/12/03 15:59:38 by fdehan           ###   ########.fr       */
+/*   Updated: 2024/12/03 18:27:13 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ t_list	*ft_parse_map(char *path)
 	{
 		zline = ft_parse_zline(line);
 		if (!zline)
-			return (ft_putendl_fd(INVALID_MAP, 2), free(line), ft_lstclear(&zmap,
-					&ft_freedataparse), ft_freegnl(), NULL);
+			return (ft_putendl_fd(INVALID_MAP, 2), free(line),
+				ft_lstclear(&zmap, &ft_freedataparse), ft_freegnl(), NULL);
 		if (ft_lstadd(&zmap, zline) == -1)
 			return (ft_putendl_fd(PARSING_ADD_FAILED, 2), free(line),
 				ft_lstclear(&zmap, &ft_freedataparse), ft_freegnl(),
