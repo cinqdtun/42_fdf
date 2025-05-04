@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:51:56 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 17:37:47 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:48:37 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ void    cleanup(t_fdf *ctx, const char *reason)
     free_split(ctx->lineSplit);
     ft_lstfree(&ctx->map);
     gclean(&ctx->garbage);
+    if (!reason)
+        exit(0);
     exit(1);
 }

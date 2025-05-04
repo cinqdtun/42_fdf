@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 16:35:43 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 20:22:09 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:47:45 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void allocateMapLine(t_fdf *ctx)
 {
     size_t len;
 
-    len = ft_strlen(ctx->lineSplit);
+    len = 0;
+    while (ctx->lineSplit[len])
+        len++;
     if (ctx->mapWidth != 0 && len != ctx->mapWidth)
         cleanup(ctx, ERROR_LINEWIDTH "\n");
     ctx->mapLine = ft_calloc(len, sizeof(t_point));
-    if (!ctx->mapLine || ft_lstadd(ctx->map, ctx->mapLine) == -1)
+    if (!ctx->mapLine || ft_lstadd(&ctx->map, ctx->mapLine) == -1)
         cleanup(ctx, ERROR_MEMORY "\n");
-    ctx->mapLine = NULL;
 }
 
 void transformSplitLine(t_fdf *ctx)
@@ -33,9 +34,7 @@ void transformSplitLine(t_fdf *ctx)
         cleanup(ctx, ERROR_EMPTYLINE "\n");
     allocateMapLine(ctx);
     while (ctx->lineSplit[++ctx->x])
-    {
-        
-    }
+        setPoint(ctx, ctx->lineSplit[ctx->x]);
 }
 
 void transformLine(t_fdf *ctx, char *line)
@@ -47,7 +46,7 @@ void transformLine(t_fdf *ctx, char *line)
     free_split(ctx->lineSplit);
     ctx->lineSplit = NULL;
 }
-
+#include <stdio.h>
 void parseLine(t_fdf *ctx)
 {
     char    *startLinePos;
@@ -57,15 +56,21 @@ void parseLine(t_fdf *ctx)
     startLinePos = ctx->rawMap + ctx->newLinePos;
     newLinePos = ft_strchr(startLinePos, '\n');
     if (newLinePos)
-        currLine = ft_strndup(ctx->newLinePos, startLinePos - newLinePos);
+        currLine = ft_strndup(startLinePos, newLinePos - startLinePos);
     else if (!newLinePos)
-        currLine = ft_strdup(ctx->newLinePos);
+        currLine = ft_strdup(startLinePos);
     gadd(&ctx->garbage, currLine);
-    transformLine(ctx, currLine);
+    //printf("Test %s %ld\n", currLine, newLinePos - startLinePos);
+    if (ft_strcmp("\n", newLinePos))
+        transformLine(ctx, currLine);
     gfree(&ctx->garbage, currLine);
-    ctx->newLinePos = newLinePos + (newLinePos != NULL);
+    if (newLinePos != NULL)
+        ctx->newLinePos = (int)(newLinePos - ctx->rawMap + 1);
+    else
+        ctx->newLinePos = 0;
 }
 
+#include "stdio.h"
 void parseMap(t_fdf *ctx)
 {
     parseLine(ctx);

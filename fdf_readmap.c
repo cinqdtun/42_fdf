@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_readfile.c                                     :+:      :+:    :+:   */
+/*   fdf_readmap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:52:25 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 16:34:16 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:24:10 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,6 @@ void	readMap(t_fdf *ctx)
 	checkExt(ctx);
 	openFile(ctx);
 	readFile(ctx);
+	if (!ctx->rawMap)
+		cleanup(ctx, ERROR_EMPTYMAP "\n");
 }

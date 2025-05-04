@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:34:06 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 16:57:12 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:42:19 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strndup(const char *s, size_t n)
 		ptr = ft_calloc(n + 1, sizeof(char));
 	if (!ptr)
 		return (NULL);
-	while (s[++i] || i < n)
+	while (s[i] && i < n)
 	{
 		ptr[i] = s[i];
 		++i;

@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:35:22 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 21:38:27 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:23:25 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define ERROR_LINEWIDTH "Error: Lines have diffrents size"
 # define ERROR_NOTINT "Error: Map contain invalid int"
 # define ERROR_COLOR "Error: Map contain an invalid color"
+# define ERROR_EMPTYMAP "Error: Map is empty"
 # define INT_MAX "2147483647"
 # define INT_MIN "2147483648"
 
@@ -34,14 +35,22 @@
 # include <stdbool.h>
 # include <unistd.h>
 
+typedef struct s_point
+{
+	double	x;
+	double	y;
+	double	z;
+	int		color;
+}			t_point;
+
 typedef struct s_fdf
 {
 	// Program wide variables
 	t_list	*garbage;
 	size_t	mapHeight;
 	size_t	mapWidth;
-	t_list  *map;
-	
+	t_list	*map;
+
 	// Funcs variables
 	char	*filename;
 	char	*rawMap;
@@ -56,20 +65,13 @@ typedef struct s_fdf
 	int		digitCount;
 	int		startDigit;
 	int		i;
-	bool    f;
+	bool	f;
 	t_point	*mapLine;
-	
 }			t_fdf;
 
-typedef struct s_point
-{
-	double	x;
-	double	y;
-	double	z;
-	int		color;
-}			t_point;
-
 void		readMap(t_fdf *ctx);
-void    	cleanup(t_fdf *ctx, const char *reason);
+void		parseMap(t_fdf *ctx);
+void		setPoint(t_fdf *ctx, char *rawPoint);
+void		cleanup(t_fdf *ctx, const char *reason);
 
 #endif

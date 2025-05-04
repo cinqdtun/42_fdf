@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:35:59 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 17:50:32 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:17:15 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int main(int argc, char** argv)
     ctx.mapHeight = 0;
     ctx.mapWidth = 0;
     readMap(&ctx);
+    parseMap(&ctx);
     cleanup(&ctx, NULL);
     return (0);
 }

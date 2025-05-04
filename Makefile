@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 RMCMD = rm
 RMFLAGS = -f
 NAME = fdf
-SRCS = fdf.c fdf_readmap.c fdf_cleanup.c
+SRCS = fdf.c fdf_readmap.c fdf_cleanup.c fdf_parsemap.c fdf_parseutils.c
 OBJS = $(SRCS:.c=.o)
 LIBFTPATH = libft
 LIBFTNAME = libft.a

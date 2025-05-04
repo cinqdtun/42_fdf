@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 20:22:02 by fdehan            #+#    #+#             */
-/*   Updated: 2024/10/22 14:55:14 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:20:26 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	if (!c)
 		return ((char *)s + ft_strlen(s));
 	while (s[i])

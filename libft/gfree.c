@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:01:18 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 12:25:46 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 22:33:44 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void gfree(t_list **gcollector, void *ptr)
         *gcollector = node->next;
         free(node->content);
         free(node);
+        node = *gcollector;
     }
-    while (node->next)
+    while (node && node->next)
     {
         prev = node;
         node = node->next;
@@ -35,6 +36,7 @@ void gfree(t_list **gcollector, void *ptr)
             prev->next = node->next;
             free(node->content);
             free(node);
+            node = prev->next;
         }
     }
 }

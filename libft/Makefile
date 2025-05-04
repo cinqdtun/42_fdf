@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 RMCMD = rm
 RMFLAGS = -f
 LIBCMD = ar
