@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   gadd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 14:35:27 by fdehan            #+#    #+#             */
-/*   Updated: 2024/10/23 19:31:35 by fdehan           ###   ########.fr       */
+/*   Created: 2025/04/16 09:59:42 by fdehan            #+#    #+#             */
+/*   Updated: 2025/05/04 12:28:11 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void    gadd(t_list **gcollector, void *ptr)
 {
-	if (!lst || !new)
-		return ;
-	new->next = *lst;
-	*lst = new;
+    if (ft_lstadd(gcollector, ptr) == -1)
+    {
+        gclean(gcollector);
+        write(2, MEM_ALLOC_FAILED, ft_strlen(MEM_ALLOC_FAILED));
+        exit(1);
+    }
 }

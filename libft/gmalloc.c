@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   gmalloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 20:12:01 by fdehan            #+#    #+#             */
-/*   Updated: 2025/04/16 09:28:49 by fdehan           ###   ########.fr       */
+/*   Created: 2025/04/16 09:44:49 by fdehan            #+#    #+#             */
+/*   Updated: 2025/05/04 12:18:52 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+void gmalloc(t_list **gcollector, size_t nmemb, size_t size)
 {
-	if (c >= 'a' && c <= 'z')
-		return (c - 32);
-	return (c);
+    void *m;
+    
+    m = ft_calloc(nmemb, size);
+    if (!m || ft_lstadd(gcollector, m) == -1)
+    {
+        free(m);
+        gclean(gcollector);
+        write(2, MEM_ALLOC_FAILED, ft_strlen(MEM_ALLOC_FAILED));
+        exit(1);
+    }
 }

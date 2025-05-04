@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 20:18:53 by fdehan            #+#    #+#             */
-/*   Updated: 2024/10/28 19:41:51 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/04/16 09:28:56 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,3 @@ int	ft_tolower(int c)
 		return (c + 32);
 	return (c);
 }
-
-/*#include <stdio.h>
-
-int	main(void)
-{
-	printf("Converting \'A\' to lower . \'%c\'\n", ft_tolower('A'));
-	printf("Converting \'T\' to lower . \'%c\'\n", ft_tolower('T'));
-	printf("Converting \'w\' to lower . \'%c\'\n", ft_tolower('w'));
-	printf("Converting \'*\' to lower . \'%c\'\n", ft_tolower('*'));
-	return (1);
-}*/

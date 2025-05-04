@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:52:49 by fdehan            #+#    #+#             */
-/*   Updated: 2024/11/29 10:15:46 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:20:48 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "gnl/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
+# define MEM_ALLOC_FAILED "Memory allocation failed"
 
 typedef struct s_list
 {
@@ -75,4 +76,10 @@ int					ft_lstadd(t_list **list, void *content);
 void				ft_lstfree(t_list **lst);
 int					ft_printf(const char *str, ...);
 char				*get_next_line(int fd);
+
+// Garbage collector
+void				gmalloc(t_list **gcollector, size_t nmemb, size_t size);
+void				gadd(t_list **gcollector, void *ptr);
+void				gclean(t_list **gcollector);
+void				gfree(t_list **gcollector, void *ptr);
 #endif

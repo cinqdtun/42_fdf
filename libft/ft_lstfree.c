@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:38:46 by fdehan            #+#    #+#             */
-/*   Updated: 2024/11/17 16:16:43 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 12:18:08 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	ft_lstfree(t_list **lst)
 {
-	t_list	*next_addr;
-	t_list	*to_del;
+	t_list	*nextn;
+	t_list	*content;
 
 	if (!lst || !*lst)
 		return ;
-	next_addr = *lst;
-	*lst = 0;
-	while (next_addr)
+	nextn = *lst;
+	*lst = NULL;
+	while (nextn)
 	{
-		free(next_addr->content);
-		to_del = next_addr;
-		next_addr = next_addr->next;
-		free(to_del);
+		free(nextn->content);
+		content = nextn;
+		nextn = nextn->next;
+		free(content);
 	}
 }
