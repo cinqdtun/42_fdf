@@ -5,153 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 09:19:38 by fdehan            #+#    #+#             */
-/*   Updated: 2024/12/03 18:26:54 by fdehan           ###   ########.fr       */
+/*   Created: 2025/05/04 14:35:22 by fdehan            #+#    #+#             */
+/*   Updated: 2025/05/04 21:38:27 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "fcntl.h"
+# define ERROR_USAGE "Usage: ./fdf <map>.fdf"
+# define CHUNK_SIZE 1048576
+# define MAX_CHUNK_FILE 50
+# define EXT ".fdf"
+# define ERROR_EXT "Error: The extension should be .fdf"
+# define ERROR_OPEN "Error: Failed to open the map"
+# define ERROR_MAPSIZE "Error: File too big"
+# define ERROR_READ "Error: A problem occured while reading the file"
+# define ERROR_EMPTYLINE "Error: Map have at least 1 empty line"
+# define ERROR_MEMORY "Error: Memory allocation failed"
+# define ERROR_LINEWIDTH "Error: Lines have diffrents size"
+# define ERROR_NOTINT "Error: Map contain invalid int"
+# define ERROR_COLOR "Error: Map contain an invalid color"
+# define INT_MAX "2147483647"
+# define INT_MIN "2147483648"
+
 # include "libft/libft.h"
-# include "limits.h"
-# include "mlx/mlx.h"
-# include <X11/keysym.h>
-# include <math.h>
-# include <stdio.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <unistd.h>
 
-# define INT_MAX_C "2147483647"
-# define INT_MIN_C "-2147483648"
-# define HEXA_SET "0123456789abcdefABCDEF"
-# define HEXA_L "0123456789abcdef"
-# define HEXA_U "0123456789ABCDEF"
-# define PROJECTION_FAILED "FDF: Something went wrong when projecting points"
-# define PARSING_ADD_FAILED "FDF: An error has occured on parsing"
-# define INVALID_MAP "FDF: The map is invalid"
-
-typedef struct s_line
+typedef struct s_fdf
 {
-	int			length;
-	int			*line;
-}				t_line;
+	// Program wide variables
+	t_list	*garbage;
+	size_t	mapHeight;
+	size_t	mapWidth;
+	t_list  *map;
+	
+	// Funcs variables
+	char	*filename;
+	char	*rawMap;
+	char	*rawInt;
+	char	*rawColor;
+	char	**lineSplit;
+	int		chunkRead;
+	int		newLinePos;
+	int		fd;
+	int		x;
+	int		y;
+	int		digitCount;
+	int		startDigit;
+	int		i;
+	bool    f;
+	t_point	*mapLine;
+	
+}			t_fdf;
 
-typedef struct s_coords
+typedef struct s_point
 {
-	double		x;
-	double		y;
-	int			color;
-}				t_coords;
+	double	x;
+	double	y;
+	double	z;
+	int		color;
+}			t_point;
 
-typedef struct s_inst
-{
-	void		*mlx;
-	void		*mlx_win;
-}				t_inst;
-
-typedef struct s_coordslst
-{
-	t_coords	*coords;
-	int			length;
-}				t_coordslst;
-
-typedef struct s_pointz
-{
-	int			z;
-	int			color;
-}				t_pointz;
-
-typedef struct s_zline
-{
-	t_pointz	*zline;
-	int			length;
-}				t_zline;
-
-typedef struct s_multi
-{
-	double		xm;
-	double		ym;
-	double		zm;
-}				t_multi;
-
-typedef struct s_trans
-{
-	int			xt;
-	int			yt;
-}				t_trans;
-
-typedef struct s_3dpoint
-{
-	int			x;
-	int			y;
-	int			z;
-}				t_3dpoint;
-
-typedef struct s_properties
-{
-	int			winh;
-	int			winw;
-	double		scale;
-	int			projh;
-	int			projw;
-	t_multi		multi;
-}				t_properties;
-
-typedef struct s_windata
-{
-	void		*mlx;
-	void		*mlx_win;
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-	int			width;
-	int			height;
-	int			closesig;
-}				t_windata;
-
-typedef struct s_mapdata
-{
-	t_list		*map;
-}				t_mapdata;
-
-// Parser
-void			ft_freedataparse(void *data);
-t_list			*ft_parse_map(char *path);
-t_pointz		*ft_parsepoint(char *point);
-int				ft_contains(char *set, int c);
-char			**ft_parse_line(char *line);
-int				ft_is_valid_until(char *str, int c);
-
-// Utils
-int				ft_splitlen(char **split);
-void			ft_freearray(char **arr);
-int				ft_abs(int i);
-int				ft_max(int i1, int i2);
-int				ft_min(int i1, int i2);
-char			*ft_gethexaset(char *hexa);
-void			ft_freegnl(void);
-
-// Lists funcs
-int				ft_lstaddline(t_list **list, int length, int *line);
-int				ft_lstaddcoords(t_list **list, int length, t_coords *coords);
-
-// Calc
-t_list			*ft_getpointsproj(t_list *map, double rad, t_multi multi);
-int				ft_getamplitude(t_list *zmap);
-void			ft_freedatapoints(void *data);
-
-// Hook
-
-void			ft_hook(t_windata *windata);
-
-// Drawing funct
-
-int				ft_getcolor(int start, int end, double prog);
-void			ft_drawline(t_coords p1, t_coords p2, t_trans trans,
-					t_windata *data);
-void			ft_drawpoints(t_list *coordsmap, t_inst inst, int color);
-void			ft_drawlinks(t_list *coordsmap, t_windata *data, t_trans trans);
+void		readMap(t_fdf *ctx);
+void    	cleanup(t_fdf *ctx, const char *reason);
 
 #endif

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gadd.c                                             :+:      :+:    :+:   */
+/*   fdf_cleanup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 09:59:42 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 16:17:40 by fdehan           ###   ########.fr       */
+/*   Created: 2025/05/04 15:51:56 by fdehan            #+#    #+#             */
+/*   Updated: 2025/05/04 17:37:47 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fdf.h"
 
-void    gadd(t_list **gcollector, void *ptr)
+void    cleanup(t_fdf *ctx, const char *reason)
 {
-    if (!ptr || ft_lstadd(gcollector, ptr) == -1)
-    {
-        gclean(gcollector);
-        write(2, MEM_ALLOC_FAILED, ft_strlen(MEM_ALLOC_FAILED));
-        exit(1);
-    }
+    if (reason)
+        ft_dprintf(2, reason);
+    free_split(ctx->lineSplit);
+    ft_lstfree(&ctx->map);
+    gclean(&ctx->garbage);
+    exit(1);
 }

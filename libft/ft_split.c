@@ -6,7 +6,7 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 19:04:09 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 14:23:17 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 16:41:45 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,24 @@ static char	*split_word(char const *str, int *start, char c)
 	while (str[i + j] != c && str[i + j])
 		j++;
 	ptr = ft_calloc(j + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
 	*start = i + j;
 	while (--j >= 0)
 		ptr[j] = str[i + j];
 	return (ptr);
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	i = -1;
+	if (!split)
+		return ;
+	while (split[++i])
+		free(split[i]);
+	free(split);
 }
 
 char	**ft_split(char const *s, char c)
@@ -63,16 +77,17 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (0);
-	i = 0;
+	i = -1;
 	word_c = count_words(s, c);
 	start = 0;
 	ptr = (char **)ft_calloc(word_c + 1, sizeof(char *));
 	if (!ptr)
 		return (NULL);
-	while (i < word_c)
+	while (++i < word_c)
 	{
 		ptr[i] = split_word(s, &start, c);
-		i++;
+		if (!ptr[i])
+			return (free_split(ptr), NULL);
 	}
 	return (ptr);
 }

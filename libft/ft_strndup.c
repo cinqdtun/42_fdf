@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gmalloc.c                                          :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 09:44:49 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 12:18:52 by fdehan           ###   ########.fr       */
+/*   Created: 2024/10/22 11:34:06 by fdehan            #+#    #+#             */
+/*   Updated: 2025/05/04 16:57:12 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void gmalloc(t_list **gcollector, size_t nmemb, size_t size)
+char	*ft_strndup(const char *s, size_t n)
 {
-    void *m;
-    
-    m = ft_calloc(nmemb, size);
-    if (!m || ft_lstadd(gcollector, m) == -1)
-    {
-        free(m);
-        gclean(gcollector);
-        write(2, MEM_ALLOC_FAILED, ft_strlen(MEM_ALLOC_FAILED));
-        exit(1);
-    }
+	size_t	i;
+	size_t	len;
+	char	*ptr;
+
+	i = 0;
+	len = ft_strlen(s);
+	if (!s)
+		return (NULL);
+	if (len < n)
+		ptr = ft_calloc(len + 1, sizeof(char));
+	else
+		ptr = ft_calloc(n + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
+	while (s[++i] || i < n)
+	{
+		ptr[i] = s[i];
+		++i;
+	}
+	return (ptr);
 }

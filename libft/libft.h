@@ -6,13 +6,13 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:52:49 by fdehan            #+#    #+#             */
-/*   Updated: 2025/05/04 14:20:48 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 16:57:25 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include "ft_printf/ft_printf.h"
+# include "ft_dprintf/ft_dprintf.h"
 # include "gnl/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
@@ -50,10 +50,12 @@ int					ft_atoi(const char *nptr);
 int					ft_atoi_base(char *str, char *base);
 void				*ft_calloc(size_t nmemb, size_t size);
 char				*ft_strdup(const char *s);
+char				*ft_strndup(const char *s, size_t n);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
+void				free_split(char **split);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
@@ -74,11 +76,11 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_lstadd(t_list **list, void *content);
 void				ft_lstfree(t_list **lst);
-int					ft_printf(const char *str, ...);
+int					ft_dprintf(int fd, const char *str, ...);
 char				*get_next_line(int fd);
 
 // Garbage collector
-void				gmalloc(t_list **gcollector, size_t nmemb, size_t size);
+void				*gcalloc(t_list **gcollector, size_t nmemb, size_t size);
 void				gadd(t_list **gcollector, void *ptr);
 void				gclean(t_list **gcollector);
 void				gfree(t_list **gcollector, void *ptr);

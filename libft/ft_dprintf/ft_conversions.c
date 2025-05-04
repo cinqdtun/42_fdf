@@ -6,11 +6,11 @@
 /*   By: fdehan <fdehan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:48:12 by fdehan            #+#    #+#             */
-/*   Updated: 2024/10/31 14:23:55 by fdehan           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:44:49 by fdehan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_dprintf.h"
 
 static int	ft_calc_unsigned_len(unsigned long long n, int base)
 {
@@ -27,19 +27,19 @@ static int	ft_calc_unsigned_len(unsigned long long n, int base)
 	return (c);
 }
 
-static void	ft_print_unsigned_hex(unsigned long long n, char *set)
+static void	ft_print_unsigned_hex(int fd, unsigned long long n, char *set)
 {
 	if (n > 15)
 	{
-		ft_print_unsigned_hex(n / 16, set);
-		ft_print_unsigned_hex(n % 16, set);
+		ft_print_unsigned_hex(fd, n / 16, set);
+		ft_print_unsigned_hex(fd, n % 16, set);
 	}
 	else
 		ft_putchar_fd(set[n], 1);
 }
 
-int	ft_print_unsigned_hex_c(unsigned long long n, char *set)
+int	ft_print_unsigned_hex_c(int fd, unsigned long long n, char *set)
 {
-	ft_print_unsigned_hex(n, set);
+	ft_print_unsigned_hex(fd, n, set);
 	return (ft_calc_unsigned_len(n, 16));
 }
